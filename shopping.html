@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping list</title>
+    <!-- <script>Vue.config.devtools = true</script> -->
+    <script src="https://unpkg.com/vue@3"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css.css">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-vue/2.23.1/bootstrap-vue.min.js"></script> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/poiret-one" rel="stylesheet">
+    <script defer src="https://friconix.com/cdn/friconix.js"> </script>
+    <script src="https://kit.fontawesome.com/dc5e9e9c8c.js" crossorigin="anonymous"></script>
+  </head>
+<body>
+  <div id="product-list" class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="nav-logo" href="#">FutureLove</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse d-flex justify-content-around align-items-end" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link align-items-end" href="#">Features</a>
+        <a class="nav-item nav-link" href="#">Exposition</a>
+      </div>  
+    </div>
+    <span onclick="toggleCart()">
+      <a href="#"><i class="fi-xnluxl-shopping-bag-thin fi-2x ml-auto px-2"></i></a>
+    </span>
+  </nav>
+  <div class="d-flex justify-content-around mb-3 border-bottom border-dark mx-5 pb-3">
+    <p class="nav-logo blurb mx-2">The future is now.<br> The future is love.</p>
+    <img class="img-fluid float-left" src="https://media.istockphoto.com/id/1182494086/photo/interior-decor-in-eco-style-with-greenery-dried-flowers-and-vegetation-in-a-modern-interior.jpg?s=612x612&w=0&k=20&c=8YGF_eO5DuZw8J1-a55SB9wV_9CnA32La9qIcH3rhfY=" alt="">
+  </div>
+        <div class="row">
+          <div class="d-flex justify-content-center">
+              <template v-for="product in products" :key="product.id">
+                  <div class="card col-4 m-1">
+                      <img v-bind:src="product.image" alt="">
+                      <h5 class="card-title card-text">{{product.name}}</h5>
+                      <h6 class="card-subtitle card-text">£{{product.price}}</h6>
+                      <button @:click="saveItem" class="btn btn-outline-dark btn-sm my-1">Add to cart</button>
+                  </div>
+              </template>
+          </div>
+        </div>
+          <div id="mySidenav" class="sidenav">
+            <ul>
+              <div v-for="item in cart">
+                <li>{{item}}</li>
+              </div>
+            </ul>
+          </div>
+    </div>
+    <script>
+        function toggleCart() {
+          document.getElementById("mySidenav").classList.toggle("width");
+        };
+        const productsList = Vue.createApp({
+            data(){
+                return {
+                    header: 'Products',
+                    editing: false,
+                    newItem: '',
+                    newItemHighPriority: false,
+                    products: [
+                      { id: 1, name: "Chair", price: "200", image: "https://cdn.themasie.com/es/1620784/butaca-con-reposabrazos-de-mdf-y-tela-rene.jpg"},
+                      { id: 2, name: "Abstract Rug", price:"200", image: "https://i.etsystatic.com/26665836/r/il/739cd6/3463562233/il_1588xN.3463562233_pxe0.jpg"},
+                      // { id: 3, name: "Dining Table", price:"200", image: "https://img1.homary.com/filters:format(webp)/mall/file/2022/04/28/30d97f6a6f001a8f46cb424192cf50a2.jpg"},
+                      { id: 4, name: "Lamp", price: "100", image: "https://ae01.alicdn.com/kf/S91b080d81f8642e98ccc5055c8c0d959D/Glass-Medieval-Floor-Lamp-Retro-American-Living-Room-Bedroom-Lamp-Bauhaus-Floor-Lamp-House-Quiet-Warm.jpg_Q90.jpg_.webp"},
+                     ],
+                     cart: []
+                    }
+                },
+                methods: {
+                        saveItem(){
+                            this.cart.push(this.products.product.name)
+                        },
+                        doEdit(editing){
+                            this.editing = editing
+                            this.newItem = ""   
+                        }
+                }
+        }).mount('#product-list')
+    </script>
+</body>
+</html>
